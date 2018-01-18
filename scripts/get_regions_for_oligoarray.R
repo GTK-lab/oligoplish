@@ -2,9 +2,9 @@
 ## parameters
 
 ## give it a project name for the set
-project <- "karpas"
+project <- "controls"
 ## a vector of symbols
-syms <- c("EGR1","NOTCH2")
+syms <- c("ACTB","GAPDH")
 ## how far upstream of the TSS to target
 upstream <- 2000
 ## how far downstream of the TSS to target
@@ -28,7 +28,7 @@ TXDB <- read_tsv(here(hg38_tss_fn),skip=1,
 
 
 get_target_ranges <- function(symbols,up=2000,down=1000,txdb=TXDB) {
-    tss <- dplyr::filter(txdb,symbol %in% symbols) %>%
+    tss <- dplyr::filter(txdb,symbol %in% syms) %>%
         as("GRanges") %>% promoters(up,down)
     tssl <- split(tss,tss$symbol)
     tssl <- lapply(tssl,function(x) as(union(x,x),"data.frame"))
